@@ -1,5 +1,5 @@
 {
-  "name": "yoramdelangen/laravel-pdo-odbc",
+  "name": "datamanagementinc/snowflake-odbc",
   "description": "PDO ODBC integration for Laravel 7 & 8 framework. Tested for Snowflake connections",
   "type": "library",
   "homepage": "https://github.com/yoramdelangen/laravel-odbc",
@@ -15,6 +15,12 @@
       "name": "Yoram de Langen",
       "email": "yoramdelangen@gmail.com",
       "homepage": "https://github.com/yoramdelangen",
+      "role": "Developer"
+    },
+    {
+      "name": "John Mahoney",
+      "email": "jmahoney@data-management.com",
+      "homepage": "https://github.com/lenny2261",
       "role": "Developer"
     }
   ],
