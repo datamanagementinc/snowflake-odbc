@@ -4,9 +4,11 @@ namespace LaravelPdoOdbc\Flavours\Snowflake\PDO;
 
 use PDO;
 use PDOStatement;
+
 use function is_float;
 use function func_get_args;
 use function call_user_func_array;
+
 use const FILTER_VALIDATE_BOOLEAN;
 
 class Statement extends PDOStatement
@@ -21,7 +23,7 @@ class Statement extends PDOStatement
         $this->pdo = $pdo;
     }
 
-    public function bindValue($parameter, $value, $type = null)
+    public function bindValue($parameter, $value, $type = null): bool
     {
         $type = null === $value ? PDO::PARAM_NULL : $type;
         $this->bindings[$parameter] = [$value, $type];
@@ -29,14 +31,14 @@ class Statement extends PDOStatement
         return $this;
     }
 
-    public function bindParam($parameter, &$value, $type = null, $maxlen = null, $driverdata = null)
+    public function bindParam($parameter, &$value, $type = null, $maxlen = null, $driverdata = null): bool
     {
         $this->bindings[$parameter] = [$value, $type];
 
         return $this;
     }
 
-    public function columnCount()
+    public function columnCount(): int
     {
         if ($this->exec) {
             return call_user_func_array([$this->exec, __FUNCTION__], func_get_args());
@@ -75,7 +77,7 @@ class Statement extends PDOStatement
         return $bindings;
     }
 
-    public function execute($bound_input_params = null)
+    public function execute($bound_input_params = null): bool
     {
         // TEMP: all adding constraints queries are failing, current workaround.
         if (str_contains($this->queryString, 'add constraint')) {
@@ -112,7 +114,7 @@ class Statement extends PDOStatement
         return call_user_func_array([$this, __FUNCTION__], func_get_args());
     }
 
-    public function fetchAll($how = PDO::FETCH_BOTH, $class_name = null, $ctor_args = null)
+    public function fetchAll(int $mode = PDO::FETCH_DEFAULT, mixed ...$args): array
     {
         if ($this->exec) {
             return call_user_func_array([$this->exec, __FUNCTION__], func_get_args());
@@ -130,7 +132,7 @@ class Statement extends PDOStatement
         return call_user_func_array([$this, __FUNCTION__], func_get_args());
     }
 
-    public function fetchObject($class_name = null, $ctor_args = null)
+    public function fetchObject($class_name = null, $ctor_args = null): object|false
     {
         if ($this->exec) {
             return call_user_func_array([$this->exec, __FUNCTION__], func_get_args());
